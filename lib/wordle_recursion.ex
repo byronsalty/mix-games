@@ -1,4 +1,4 @@
-defmodule Games.Wordle do
+defmodule Games.WordleRecur do
 
   @doc """
   iex> Games.Wordle.search("hello", "hello")
@@ -35,16 +35,22 @@ defmodule Games.Wordle do
     |> Enum.unzip()
   end
 
-  # With reduce
+  # With recursion
   defp check_yellow({ans, guess}) do
-    Enum.reduce(guess, {ans, []}, fn letter, {ans, acc} ->
-      if is_binary(letter) and Enum.member?(ans, letter) do
-        {ans -- [letter], acc ++ [:yellow]}
-      else
-        {ans, acc ++ [letter]}
-      end
-    end)
+    {ans, recurse_yellow(ans, guess)}
   end
+  defp recurse_yellow(_, []) do
+    []
+  end
+  defp recurse_yellow(ans, guess) do
+    [letter | rest] = guess
+    if is_binary(letter) and Enum.member?(ans, letter) do
+      [:yellow] ++ recurse_yellow(ans -- [letter], rest)
+    else
+      [letter] ++ recurse_yellow(ans, rest)
+    end
+  end
+
   defp check_gray({ans, guess}) do
     guess = guess |> Enum.map(fn g -> if is_binary(g), do: :gray, else: g end)
     {ans, guess}

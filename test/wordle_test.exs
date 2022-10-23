@@ -26,9 +26,23 @@ defmodule Games.WordleTest do
   test "test one tricky" do
     result = Games.Wordle.search("light", "hello")
     assert result == [:yellow, :gray, :yellow, :gray, :gray]
-  end
+  end 
   test "test two tricky" do
     result = Games.Wordle.search("hello", "style")
     assert result == [:gray, :gray, :gray, :green, :yellow]
+  end
+  test "feedback/2 mixture of grey and green" do
+    assert Games.Wordle.search("zzdef", "badef") == [:gray, :gray, :green, :green, :green]
+  end
+  test "feedback/2 mixture of grey, green, and yellow" do
+    assert Games.Wordle.search("zzdef", "badfe") == [:gray, :gray, :green, :yellow, :yellow]
+  end
+  test "should return green, yellow, grey based on the letter match and position" do
+    result = Games.Wordle.search("fancy", "candy")
+    assert result == [:yellow, :green, :green, :gray, :green]
+  end
+  test "test six letters" do
+    result = Games.Wordle.search("abcdef", "fedcba")
+    assert result == [:yellow, :yellow, :yellow, :yellow, :yellow, :yellow]
   end
 end
