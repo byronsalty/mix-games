@@ -2,12 +2,9 @@ defmodule Games.RockPaperScissors do
   @choices [:rock, :paper, :scissors]
   @you_win [rock: :scissors, paper: :rock, scissors: :paper]
   @you_lose [rock: :paper, paper: :scissors, scissors: :rock]
-
-  @spec winners(:paper | :rock | :scissors, :paper | :rock | :scissors) :: :you
   def winners(you, opp) when {you, opp} in @you_win do
     :you
   end
-  @spec winners(:paper | :rock | :scissors, :paper | :rock | :scissors) :: :you
   def winners(you, opp) when {you, opp} in @you_lose do
     :opp
   end
@@ -15,7 +12,6 @@ defmodule Games.RockPaperScissors do
     :tie
   end
 
-  @spec start :: nil
   def start() do
     opponent = Enum.random(@choices)
     IO.puts("Welcome to Rock Paper Scissors!")
@@ -29,7 +25,6 @@ defmodule Games.RockPaperScissors do
     end
   end
 
-  @spec get_input :: atom
   def get_input() do
     choice = IO.gets("(rock/paper/scissors): ")
     choice = String.to_atom(String.trim(choice))
