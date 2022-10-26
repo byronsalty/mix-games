@@ -54,4 +54,47 @@ defmodule Games.WordleTest do
     result = Games.Wordle.search("abcdef", "fedcba")
     assert result == [:yellow, :yellow, :yellow, :yellow, :yellow, :yellow]
   end
+
+  @tag timeout: 120000
+  @tag :benchmark
+  test "testing 5x inputs to see how performance changes" do
+    Benchee.run(%{
+
+      "Reduce Wordle abcde 5 yellow" => fn -> Games.Wordle.search("abcde", "bcdea") end,
+      "Reduce Wordle with 25 yellow" => fn -> Games.Wordle.search("abcdefghijklmnopqrstuvwxy", "bcdefghijklmnopqrstuvwxya") end
+    })
+  end
+
+  # @tag timeout: 120000
+  # @tag :benchmark
+  # test "search/2 benchmark" do
+  #   Benchee.run(%{
+  #     # "Reduce Wordle hello with hello" => fn -> Games.Wordle.search("hello", "hello") end,
+  #     # "Reduce Wordle abcde with fghij" => fn -> Games.Wordle.search("abcde", "fghij") end,
+  #     # "Reduce Wordle hello with style" => fn -> Games.Wordle.search("hello", "style") end,
+  #     # "Reduce Wordle hello with hoard" => fn -> Games.Wordle.search("hello", "hoard") end,
+  #     "Reduce Wordle abcde 5 yellow" => fn -> Games.Wordle.search("abcde", "bcdea") end,
+  #     "Reduce Wordle with 25 yellow" => fn -> Games.Wordle.search("abcdefghijklmnopqrstuvwxy", "bcdefghijklmnopqrstuvwxya") end
+
+  #     # "All Green" => fn -> Games.Wordle.search("aaaaa", "aaaaa") end,
+  #     # "All Grey" => fn -> Games.Wordle.search("lapse", "quick") end,
+  #     # "All Yellow" => fn -> Games.Wordle.search("lapse", "alsep") end,
+  #     # "3 Green 2 Yellow" => fn -> Games.Wordle.search("lapse", "lapes") end,
+  #     # "4 Grey 1 Yellow" => fn -> Games.Wordle.search("lapse", "xzwts") end,
+  #     # "3 Grey 2 Yellow" => fn -> Games.Wordle.search("lapse", "xzwas") end,
+  #     # "3 Green 2 Grey" => fn -> Games.Wordle.search("lapse", "lapzq") end
+  #   })
+  # end
+
+
+  # @tag :benchmark
+  # test "search/2 benchmark w/ recursion" do
+  #   Benchee.run(%{
+  #     "Recurse Wordle hello with hello" => fn -> Games.WordleRecur.search("hello", "hello") end,
+  #     "Recurse Wordle abcde with fghij" => fn -> Games.WordleRecur.search("abcde", "fghij") end,
+  #     "Recurse Wordle hello with style" => fn -> Games.WordleRecur.search("hello", "style") end,
+  #     "Recurse Wordle with shifted alpha" => fn -> Games.Wordle.search("abcdefghijklmnopqrstuvwxyx", "bcdefghijklmnopqrstuvwxyxa") end,
+  #     "Recurse Wordle hello with hoard" => fn -> Games.WordleRecur.search("hello", "hoard") end
+  #   })
+  # end
 end

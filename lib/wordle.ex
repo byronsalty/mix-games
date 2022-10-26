@@ -18,6 +18,7 @@ defmodule Games.Wordle do
       iex> Games.Wordle.search("aaaac", "bbbbc")
       [:gray, :gray, :gray, :gray, :green]
   """
+  # def search(ans, guess) when ans == guess, do: [:green, :green, :green, :green, :green]
   def search(ans, guess) do
     ans = String.downcase(ans) |> String.split("", trim: true)
     guess = String.downcase(guess) |> String.split("", trim: true)
