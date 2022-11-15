@@ -4,11 +4,11 @@ defmodule Games.ScoreTracker do
   def start_link do
     GenServer.start_link(__MODULE__, 0)
   end
-  def score(pid, add) do
+  def add(pid, add) do
     GenServer.cast(pid, {:add, add})
   end
 
-  def get_score(pid) do
+  def get(pid) do
     GenServer.call(pid, :get)
   end
 
